@@ -11,3 +11,8 @@ WHERE account_email = 'tony@starkent.com';
 UPDATE inventory 
 SET inv_description = REPLACE(inv_description, 'small interiors', 'a huge interior') 
 WHERE inv_make = 'GM' AND inv_model = 'Hummer';
+
+SELECT inv_make, inv_model, classification_name 
+FROM inventory 
+INNER JOIN classification ON inventory.classification_id = classification.classification_id 
+WHERE classification_name = 'Sport';
