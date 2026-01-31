@@ -226,14 +226,14 @@ footer p {
   font-size: 0.9rem;
 }
 
-/* Media Query para pantallas grandes (768px+) */
+
 @media screen and (min-width: 768px) {
 
   main>h1 {
     font-size: 2rem;
   }
 
-  /* Hero Section - Layout horizontal */
+ 
   .hero {
     flex-direction: row;
     align-items: center;
@@ -256,13 +256,12 @@ footer p {
     max-width: 100%;
   }
 
-  /* Upgrades and Reviews - Layout lado a lado */
+
   .upgrades-reviews {
     flex-direction: row;
     gap: 2rem;
   }
 
-  /* Reviews aparece a la izquierda en desktop */
   .reviews {
     flex: 1;
     order: 1;
@@ -290,5 +289,57 @@ footer p {
 
   .upgrades {
     order: 2;
+  }
+}
+
+/* Vehicle Detail Styles */
+.vehicle-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.vehicle-image {
+  flex: 1 1 400px;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-info {
+  flex: 1 1 400px;
+}
+
+.vehicle-info h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.vehicle-info .price {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin: 1rem 0;
+}
+
+.vehicle-info p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.vehicle-info .description {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ddd;
+}
+
+/* Responsive - stack on small screens */
+@media (max-width: 768px) {
+  .vehicle-detail {
+    flex-direction: column;
   }
 }
