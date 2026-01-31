@@ -1,51 +1,294 @@
-/* Vehicle Detail Styles */
-.vehicle-detail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin: 2rem 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.vehicle-image {
-  flex: 1 1 400px;
-}
-
-.vehicle-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.vehicle-info {
-  flex: 1 1 400px;
-}
-
-.vehicle-info h2 {
-  margin-top: 0;
-  color: #333;
-}
-
-.vehicle-info .price {
-  font-size: 1.5rem;
-  color: #007bff;
-  margin: 1rem 0;
-}
-
-.vehicle-info p {
-  margin: 0.75rem 0;
+body {
+  font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
+  color: #000;
+  background-image: url('/images/site/checkerboard.jpg');
+  background-repeat: repeat;
 }
 
-.vehicle-info .description {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #ddd;
+/* Wrapper para contenido principal con fondo blanco */
+header,
+nav,
+main,
+footer {
+  background-color: #fff;
+  max-width: 100%;
 }
 
-/* Responsive - stack on small screens */
-@media (max-width: 768px) {
-  .vehicle-detail {
-    flex-direction: column;
+/* Header - Mobile First */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 3px solid #000;
+}
+
+.siteName a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+}
+
+#tools a {
+  color: #000;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* Navegación - Mobile First */
+nav {
+  background-color: #333;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  flex: 1;
+  text-align: center;
+}
+
+nav ul li a {
+  display: block;
+  padding: 0.75rem;
+  color: #fff;
+  text-decoration: none;
+  border-right: 1px solid #555;
+}
+
+nav ul li:last-child a {
+  border-right: none;
+}
+
+nav ul li a:hover {
+  background-color: #555;
+}
+
+/* Main Content */
+main {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+main>h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+/* Hero Section - Mobile */
+.hero {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.hero-content h2 {
+  font-size: 1.5rem;
+  color: #00a8cc;
+  margin-bottom: 0.5rem;
+}
+
+.hero-content ul {
+  list-style: none;
+  margin-bottom: 1rem;
+  color: #00a8cc;
+}
+
+.hero-content ul li {
+  margin-bottom: 0.25rem;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #00a8cc;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.cta-button:hover {
+  background-color: #0088aa;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+/* Upgrades and Reviews Section - Mobile */
+.upgrades-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.upgrades h2,
+.reviews h2 {
+  color: #000;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+/* Reviews - Mobile first (aparece primero) */
+.reviews {
+  order: 1;
+}
+
+.reviews ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.reviews ul li {
+  margin-bottom: 0.75rem;
+  color: #000;
+}
+
+/* Upgrades - aparece segundo en mobile */
+.upgrades {
+  order: 2;
+}
+
+/* Upgrade Grid - Mobile (2x2) */
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.upgrade-item {
+  background-color: #00a8cc;
+  text-align: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.upgrade-item a {
+  display: block;
+  padding: 1rem;
+  text-decoration: none;
+  color: #000;
+}
+
+.upgrade-item img {
+  width: 100%;
+  max-width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto 0.5rem;
+  background-color: #fff;
+  border: 2px solid #00a8cc;
+  display: block;
+}
+
+.upgrade-item span {
+  display: block;
+  font-weight: bold;
+  color: #000;
+  text-decoration: underline;
+}
+
+.upgrade-item:hover {
+  background-color: #0088aa;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+footer p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+/* Media Query para pantallas grandes (768px+) */
+@media screen and (min-width: 768px) {
+
+  main>h1 {
+    font-size: 2rem;
+  }
+
+  /* Hero Section - Layout horizontal */
+  .hero {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-content {
+    flex: 1;
+  }
+
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+
+  .hero-image {
+    flex: 1;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+  }
+
+  /* Upgrades and Reviews - Layout lado a lado */
+  .upgrades-reviews {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  /* Reviews aparece a la izquierda en desktop */
+  .reviews {
+    flex: 1;
+    order: 1;
+  }
+
+  /* Upgrades aparece a la derecha en desktop */
+  .upgrades {
+    flex: 1;
+    order: 2;
+  }
+
+  .upgrades h2,
+  .reviews h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Media Query para mobile que invierte el orden */
+@media screen and (max-width: 767px) {
+
+  /* En mobile, Reviews primero, Upgrades después */
+  .reviews {
+    order: 1;
+  }
+
+  .upgrades {
+    order: 2;
   }
 }
