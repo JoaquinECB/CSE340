@@ -1,7 +1,14 @@
 <% if (title) { %>
-<h1><%= title %></h1>
-<% } else {
-  res.redirect('/')
-} %>
+  <h1><%= title %></h1>
+<% } %>
 
-<%# messages(Sorry Error) %>
+<% if (message) { %>
+  <p class="notice"><%= message %></p>
+<% } %>
+
+<p>We apologize for the inconvenience. Please try one of the following:</p>
+<ul>
+  <li><a href="/">Return to Home Page</a></li>
+  <li>Use the navigation menu above to browse our inventory</li>
+  <li>Contact us if you continue to experience problems</li>
+</ul>

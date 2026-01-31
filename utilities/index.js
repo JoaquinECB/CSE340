@@ -24,8 +24,6 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-module.exports = Util
-
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -59,9 +57,43 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the vehicle detail view HTML
+* ************************************ */
+Util.buildVehicleDetail = async function(vehicle){
+  if (!vehicle) {
+    return '<p class="notice">Sorry, vehicle not found.</p>'
+  }
+  
+  let detail = `
+    <div class="vehicle-detail">
+      <div class="vehicle-image">
+        <img src="${vehicle.inv_image}" 
+             alt="${vehicle.inv_make} ${vehicle.inv_model}" />
+      </div>
+      <div class="vehicle-info">
+        <h2>${vehicle.inv_make} ${vehicle.inv_model} Details</h2>
+        
+        <p class="price"><strong>Price: $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</strong></p>
+        
+        <p><strong>Year:</strong> ${vehicle.inv_year}</p>
+        
+        <p><strong>Mileage:</strong> ${new Intl.NumberFormat('en-US').format(vehicle.inv_miles)} miles</p>
+        
+        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+        
+        <p class="description"><strong>Description:</strong><br> ${vehicle.inv_description}</p>
+      </div>
+    </div>
+  `
+  return detail
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+module.exports = Util
