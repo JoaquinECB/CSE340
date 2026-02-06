@@ -12,8 +12,10 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
-const errorRoute = require("./routes/errorRoute")  // NUEVA LÍNEA
-const utilities = require("./utilities/");
+const errorRoute = require("./routes/errorRoute")  
+const utilities = require("./utilities/")
+const session = require("express-session")
+const pool = require('./database/')
 
 /* ***********************
  * View Engine and Templates
