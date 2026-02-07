@@ -344,8 +344,9 @@ footer p {
   }
 }
 
-/* Login Form Styles */
-.login-container {
+/* Account Forms - Login & Registration */
+.login-container,
+.register-container {
   background: linear-gradient(135deg, #3d5a7d 0%, #2c4a6c 100%);
   padding: 3rem 2rem;
   border-radius: 8px;
@@ -354,13 +355,15 @@ footer p {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.login-form {
+.login-form,
+.register-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.login-form label {
+.login-form label,
+.register-form label {
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
@@ -368,7 +371,8 @@ footer p {
   display: block;
 }
 
-.login-form input {
+.login-form input,
+.register-form input {
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 5px;
@@ -378,16 +382,19 @@ footer p {
   transition: box-shadow 0.3s ease;
 }
 
-.login-form input:focus {
+.login-form input:focus,
+.register-form input:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
-.login-form input::placeholder {
+.login-form input::placeholder,
+.register-form input::placeholder {
   color: #999;
 }
 
-.login-btn {
+.login-btn,
+.register-btn {
   background-color: #fff;
   color: #3d5a7d;
   padding: 0.75rem 2rem;
@@ -401,12 +408,14 @@ footer p {
   align-self: center;
 }
 
-.login-btn:hover {
+.login-btn:hover,
+.register-btn:hover {
   background-color: #f0f0f0;
   transform: translateY(-2px);
 }
 
-.login-btn:active {
+.login-btn:active,
+.register-btn:active {
   transform: translateY(0);
 }
 
@@ -427,52 +436,10 @@ footer p {
   opacity: 0.8;
 }
 
-/* Registration Form Styles */
-.register-container {
-  background: linear-gradient(135deg, #3d5a7d 0%, #2c4a6c 100%);
-  padding: 3rem 2rem;
-  border-radius: 8px;
-  max-width: 500px;
-  margin: 2rem auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.register-form label {
-  color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
+/* Registration-specific styles */
 .required {
   color: #ff6b6b;
   font-weight: bold;
-}
-
-.register-form input {
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  transition: box-shadow 0.3s ease;
-}
-
-.register-form input:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-}
-
-.register-form input::placeholder {
-  color: #999;
 }
 
 .password-requirements {
@@ -507,27 +474,4 @@ footer p {
   left: 0;
   color: #4caf50;
   font-weight: bold;
-}
-
-.register-btn {
-  background-color: #fff;
-  color: #3d5a7d;
-  padding: 0.75rem 2rem;
-  border: none;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  align-self: center;
-}
-
-.register-btn:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-.register-btn:active {
-  transform: translateY(0);
 }
