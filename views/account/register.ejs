@@ -1,24 +1,38 @@
 <%- nav %>
 
-<div class="login-container">
+<h1><%= title %></h1>
+
+<div class="register-container">
   <% if (locals.message) { %>
       <div class="flash"><%= message %></div>
   <% } %>
 
-  <form method="post" action="/account/register" class="login-form">
-      <label for="account_firstname">First Name:</label>
+  <form method="post" action="/account/register" class="register-form">
+      <label for="account_firstname">First Name: <span class="required">*</span></label>
       <input type="text" id="account_firstname" name="account_firstname" required>
 
-      <label for="account_lastname">Last Name:</label>
+      <label for="account_lastname">Last Name: <span class="required">*</span></label>
       <input type="text" id="account_lastname" name="account_lastname" required>
 
-      <label for="account_email">Email:</label>
+      <label for="account_email">Email address: <span class="required">*</span></label>
       <input type="email" id="account_email" name="account_email" required>
 
-      <label for="account_password">Password:</label>
-      <input type="password" id="account_password" name="account_password" required>
+      <label for="account_password">Password: <span class="required">*</span></label>
+      <input type="password" id="account_password" name="account_password" required
+             pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{12,})$"
+             title="Password must be at least 12 characters long and contain at least 1 uppercase letter, 1 number, and 1 special character (!@#$%^&*)">
 
-      <button type="submit" class="login-btn">REGISTER</button>
+      <div class="password-requirements">
+        <p><strong>Password must include:</strong></p>
+        <ul>
+          <li>At least 12 characters in length</li>
+          <li>At least 1 capital letter (A-Z)</li>
+          <li>At least 1 number (0-9)</li>
+          <li>At least 1 special character (!@#$%^&*)</li>
+        </ul>
+      </div>
+
+      <button type="submit" class="register-btn">REGISTER</button>
   </form>
 
   <p class="signup-text">Already have an account? <a href="/account/login">Login</a></p>
