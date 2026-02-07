@@ -1,10 +1,10 @@
 const express = require("express")
 const router = new express.Router()
 const utilities = require("../utilities/")
-const accountsController = require("../controllers/accountsController")
+const accountController = require("../controllers/accountController")
 
 // Route to build the login view when "My Account" is clicked
-router.get("/", utilities.handleErrors(accountsController.buildLogin))
+router.get("/", utilities.handleErrors(accountController.buildLogin))
 
 // Export the router
 module.exports = router
