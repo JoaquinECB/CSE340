@@ -24,7 +24,6 @@ const accountRoute = require("./routes/accountRoute")
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
-app.use("/account", accountRoute)
 
 /* ***********************
  * Middleware
@@ -61,6 +60,8 @@ app.use("/error", errorRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
+// Account route
+app.use("/account", accountRoute)
 
 /* ***********************
 * Express Error Handler
