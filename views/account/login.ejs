@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/account.css">
-</head>
-<body>
-  <%- nav %>
+<%- nav %>
 
-  <h1><%= title %></h1>
+<h1><%= title %></h1>
 
-  <% if (locals.message) { %>
+<% if (locals.message) { %>
     <div class="flash"><%= message %></div>
-  <% } %>
+<% } %>
 
-  <form method="post" action="/account/login">
+<form method="post" action="/account/login">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
 
@@ -22,8 +14,6 @@
     <input type="password" id="password" name="password" required>
 
     <button type="submit">Login</button>
-  </form>
+</form>
 
-  <p>No account? <a href="/account/register">Sign-up</a></p>
-</body>
-</html>
+<p>No account? <a href="/account/register">Sign-up</a></p>
