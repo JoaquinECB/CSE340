@@ -36,6 +36,9 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 // Route to build vehicle detail view
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByInventoryId));
 
+// Route to build edit inventory view
+router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView));
+
 // Route to return inventory as JSON based on classification_id
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 

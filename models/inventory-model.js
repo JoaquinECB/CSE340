@@ -70,6 +70,7 @@ module.exports = {
   getClassifications, 
   getInventoryByClassificationId,
   getVehicleByInventoryId,
+  getInventoryById: getVehicleByInventoryId,
   addClassification,
   addInventoryItem
 };
