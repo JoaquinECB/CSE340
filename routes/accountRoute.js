@@ -11,7 +11,7 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
 // Route to display account management view
-router.get("/", utilities.handleErrors(accountController.displayAccountManagement))
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.displayAccountManagement))
 
 // Route to process the registration data
 router.post(
