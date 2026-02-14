@@ -13,7 +13,7 @@
     </ul>
   <% } %>
 
-  <form method="post" action="/inv/update" class="inventory-form">
+  <form method="post" action="/inv/update" class="inventory-form" id="updateForm">
     <div class="form-group">
       <label for="classificationList">Classification: <span class="required">*</span></label>
       <%- locals.classificationSelect %>
@@ -126,7 +126,9 @@
 
     <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
 
-    <button type="submit" class="btn btn-submit">Update Vehicle</button>
+    <button type="submit" class="btn btn-submit" disabled>Update Vehicle</button>
     <a href="/inv/" class="btn btn-cancel">Cancel</a>
   </form>
 </div>
+
+<script src="../../js/inv-update.js"></script>

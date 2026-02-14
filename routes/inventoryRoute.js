@@ -30,6 +30,14 @@ router.post(
   utilities.handleErrors(invController.addInventoryItem)
 )
 
+// Route to process update inventory
+router.post(
+  "/update",
+  invValidate.inventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+)
+
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
