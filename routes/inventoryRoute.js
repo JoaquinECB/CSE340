@@ -47,6 +47,15 @@ router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByI
 // Route to build edit inventory view
 router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView));
 
+// Route to build delete inventory confirmation view
+router.get("/delete/:inv_id", utilities.handleErrors(invController.deleteInventoryConfirm));
+
+// Route to process delete inventory
+router.post(
+  "/delete",
+  utilities.handleErrors(invController.deleteInventory)
+);
+
 // Route to return inventory as JSON based on classification_id
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
