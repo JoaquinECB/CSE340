@@ -123,6 +123,8 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
  * Middleware to check token validity
  **************************************** */
 Util.checkJWTToken = (req, res, next) => {
+ res.locals.loggedin = 0
+ res.locals.accountData = null
  if (req.cookies.jwt) {
   jwt.verify(
    req.cookies.jwt,
