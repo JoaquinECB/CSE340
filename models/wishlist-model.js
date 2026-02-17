@@ -43,6 +43,7 @@ async function getWishlistByAccountId(account_id) {
     return data.rows
   } catch (error) {
     console.error("getWishlistByAccountId error " + error)
+    return []
   }
 }
 

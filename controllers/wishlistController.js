@@ -55,18 +55,23 @@ wishlistCont.removeFromWishlist = async function (req, res, next) {
  *  Build wishlist view
  * ************************** */
 wishlistCont.buildWishlist = async function (req, res, next) {
-  const account_id = res.locals.accountData.account_id
-  const wishlist = await wishlistModel.getWishlistByAccountId(account_id)
-  let nav = await utilities.getNav()
+  try {
+    const account_id = res.locals.accountData.account_id
+    const wishlist = await wishlistModel.getWishlistByAccountId(account_id)
+    let nav = await utilities.getNav()
 
-  const grid = await utilities.buildWishlistGrid(wishlist)
+    const grid = await utilities.buildWishlistGrid(wishlist || [])
 
-  res.render("./inventory/wishlist", {
-    title: "My Wishlist",
-    nav,
-    grid,
-    wishlist,
-  })
+    res.render("./inventory/wishlist", {
+      title: "My Wishlist",
+      nav,
+      grid,
+      wishlist: wishlist || [],
+    })
+  } catch (error) {
+    console.error("buildWishlist error: " + error)
+    next(error)
+  }
 }
 
 /* ***************************
