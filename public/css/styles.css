@@ -37,6 +37,17 @@ header {
   text-decoration: none;
 }
 
+#tools {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+#tools span {
+  font-weight: bold;
+}
+
 #tools a {
   color: #000;
   text-decoration: none;
