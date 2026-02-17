@@ -20,6 +20,7 @@ const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
 const wishlistRoute = require("./routes/wishlistRoute")
 const cookieParser = require("cookie-parser")
+const path = require('path')
 
 /* ***********************
  * View Engine and Templates
@@ -58,6 +59,11 @@ app.use(cookieParser())
 
 // Check JWT Token Middleware
 app.use(utilities.checkJWTToken)
+
+// Serve favicon explicitly (some clients request /favicon.ico)
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'images', 'site', 'favicon-32x32.png'))
+})
 
 /* ***********************
  * Routes
