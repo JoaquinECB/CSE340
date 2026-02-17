@@ -18,6 +18,7 @@ const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
+const wishlistRoute = require("./routes/wishlistRoute")
 const cookieParser = require("cookie-parser")
 
 /* ***********************
@@ -66,6 +67,8 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
+// Wishlist routes
+app.use("/wishlist", wishlistRoute)
 // Error route - NUEVA LÍNEA
 app.use("/error", errorRoute)
 // Account route

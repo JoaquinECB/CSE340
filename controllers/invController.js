@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const wishlistModel = require("../models/wishlist-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -32,7 +33,13 @@ invCont.buildByInventoryId = async function (req, res, next) {
     return next(err)
   }
   
-  const detail = await utilities.buildVehicleDetail(vehicle)
+  // Check if user is logged in and if vehicle is in their wishlist
+  let inWishlist = false
+  if (res.locals.loggedin) {
+    inWishlist = await wishlistModel.isInWishlist(res.locals.accountData.account_id, inv_id)
+  }
+  
+  const detail = await utilities.buildVehicleDetail(vehicle, inWishlist, res.locals.loggedin)
   let nav = await utilities.getNav()
   const vehicleName = `${vehicle.inv_make} ${vehicle.inv_model}`
   

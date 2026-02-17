@@ -1,0 +1,14 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/account')
+} %>
+
+<% if (wishlist && wishlist.length > 0) { %>
+  <%- grid %>
+<% } else { %>
+  <div class="notice">
+    <p>You don't have any vehicles in your wishlist yet.</p>
+    <p><a href="/inv/type/2" title="View Sport Vehicles">Browse Vehicles</a></p>
+  </div>
+<% } %>

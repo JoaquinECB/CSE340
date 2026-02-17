@@ -62,9 +62,16 @@ Util.buildClassificationGrid = async function(data){
 /* **************************************
 * Build the vehicle detail view HTML
 * ************************************ */
-Util.buildVehicleDetail = async function(vehicle){
+Util.buildVehicleDetail = async function(vehicle, inWishlist = false, isLoggedIn = false){
   if (!vehicle) {
     return '<p class="notice">Sorry, vehicle not found.</p>'
+  }
+  
+  let wishlistButton = ''
+  if (isLoggedIn) {
+    const buttonText = inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'
+    const buttonClass = inWishlist ? 'remove-wishlist' : 'add-wishlist'
+    wishlistButton = `<button class="wishlist-btn ${buttonClass}" data-inv-id="${vehicle.inv_id}" title="${buttonText}">${buttonText}</button>`
   }
   
   let detail = `
@@ -85,6 +92,8 @@ Util.buildVehicleDetail = async function(vehicle){
         <p><strong>Color:</strong> ${vehicle.inv_color}</p>
         
         <p class="description"><strong>Description:</strong><br> ${vehicle.inv_description}</p>
+        
+        ${wishlistButton}
       </div>
     </div>
   `
@@ -147,6 +156,40 @@ Util.checkJWTToken = (req, res, next) => {
 /* ****************************************
  *  Check Login
  * ************************************ */
+/* **************************************
+* Build the wishlist grid view HTML
+* ************************************ */
+Util.buildWishlistGrid = async function(data){
+  let grid = ''
+  if(data.length > 0){
+    grid = '<ul id="inv-display">'
+    data.forEach(item => { 
+      grid += '<li>'
+      grid +=  '<a href="../../inv/detail/'+ item.inv_id 
+      + '" title="View ' + item.inv_make + ' '+ item.inv_model 
+      + 'details"><img src="' + item.inv_thumbnail 
+      +'" alt="Image of '+ item.inv_make + ' ' + item.inv_model 
+      +' on CSE Motors" /></a>'
+      grid += '<div class="namePrice">'
+      grid += '<hr />'
+      grid += '<h2>'
+      grid += '<a href="../../inv/detail/' + item.inv_id +'" title="View ' 
+      + item.inv_make + ' ' + item.inv_model + ' details">' 
+      + item.inv_make + ' ' + item.inv_model + '</a>'
+      grid += '</h2>'
+      grid += '<span>$' 
+      + new Intl.NumberFormat('en-US').format(item.inv_price) + '</span>'
+      grid += '<button class="remove-wishlist-btn" data-inv-id="' + item.inv_id + '">Remove from Wishlist</button>'
+      grid += '</div>'
+      grid += '</li>'
+    })
+    grid += '</ul>'
+  } else { 
+    grid = '<p class="notice">You don\'t have any vehicles in your wishlist yet.</p>'
+  }
+  return grid
+}
+
 Util.checkLogin = (req, res, next) => {
  if (res.locals.loggedin) {
   next()
