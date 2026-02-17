@@ -12,7 +12,6 @@ function addToWishlist(invId) {
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      // Update button appearance
       const btn = document.querySelector(`.wishlist-btn[data-inv-id="${invId}"]`)
       if (btn) {
         btn.textContent = 'Remove from Wishlist'
@@ -43,7 +42,6 @@ function removeFromWishlist(invId) {
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      // Update button appearance or remove item from page
       const btn = document.querySelector(`.wishlist-btn[data-inv-id="${invId}"]`)
       if (btn) {
         btn.textContent = 'Add to Wishlist'
@@ -51,18 +49,14 @@ function removeFromWishlist(invId) {
         btn.classList.add('add-wishlist')
         btn.onclick = () => addToWishlist(invId)
       }
-      
-      // If on wishlist page, remove the item
       const listItem = document.querySelector(`li [data-inv-id="${invId}"]`)?.closest('li')
       if (listItem) {
         listItem.remove()
-        // Check if wishlist is empty
         const list = document.querySelector('#inv-display')
         if (list && list.children.length === 0) {
           location.reload()
         }
       }
-      
       showNotification('Removed from your wishlist!', 'success')
     } else {
       showNotification(data.message || 'Error removing from wishlist', 'error')
@@ -90,9 +84,7 @@ function showNotification(message, type = 'info') {
     z-index: 1000;
     animation: slideIn 0.3s ease-in-out;
   `
-  
   document.body.appendChild(notification)
-  
   setTimeout(() => {
     notification.style.animation = 'slideOut 0.3s ease-in-out'
     setTimeout(() => notification.remove(), 300)
@@ -101,11 +93,11 @@ function showNotification(message, type = 'info') {
 
 // Initialize wishlist buttons on page load
 document.addEventListener('DOMContentLoaded', function() {
-  // Add event listeners to wishlist buttons
   const wishlistBtns = document.querySelectorAll('.wishlist-btn')
   wishlistBtns.forEach(btn => {
     const invId = btn.getAttribute('data-inv-id')
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault()
       if (btn.classList.contains('add-wishlist')) {
         addToWishlist(invId)
       } else {
@@ -114,42 +106,27 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   })
   
-  // Add event listeners to remove buttons in wishlist page
   const removeButtons = document.querySelectorAll('.remove-wishlist-btn')
   removeButtons.forEach(btn => {
     const invId = btn.getAttribute('data-inv-id')
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault()
       removeFromWishlist(invId)
     })
   })
 
-  // Add CSS for animations if not already added
   if (!document.querySelector('style[data-wishlist]')) {
     const style = document.createElement('style')
     style.setAttribute('data-wishlist', 'true')
     style.innerHTML = `
       @keyframes slideIn {
-        from {
-          transform: translateX(400px);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(0);
-          opacity: 1;
-        }
+        from { transform: translateX(400px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
       }
-      
       @keyframes slideOut {
-        from {
-          transform: translateX(0);
-          opacity: 1;
-        }
-        to {
-          transform: translateX(400px);
-          opacity: 0;
-        }
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(400px); opacity: 0; }
       }
-      
       .wishlist-btn {
         background-color: #ff6b6b;
         color: white;
@@ -161,23 +138,10 @@ document.addEventListener('DOMContentLoaded', function() {
         font-size: 14px;
         transition: background-color 0.3s ease;
       }
-      
-      .wishlist-btn.add-wishlist {
-        background-color: #ff6b6b;
-      }
-      
-      .wishlist-btn.add-wishlist:hover {
-        background-color: #ff5252;
-      }
-      
-      .wishlist-btn.remove-wishlist {
-        background-color: #4CAF50;
-      }
-      
-      .wishlist-btn.remove-wishlist:hover {
-        background-color: #45a049;
-      }
-      
+      .wishlist-btn.add-wishlist { background-color: #ff6b6b; }
+      .wishlist-btn.add-wishlist:hover { background-color: #ff5252; }
+      .wishlist-btn.remove-wishlist { background-color: #4CAF50; }
+      .wishlist-btn.remove-wishlist:hover { background-color: #45a049; }
       .remove-wishlist-btn {
         background-color: #f44336;
         color: white;
@@ -190,10 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
         display: block;
         transition: background-color 0.3s ease;
       }
-      
-      .remove-wishlist-btn:hover {
-        background-color: #da190b;
-      }
+      .remove-wishlist-btn:hover { background-color: #da190b; }
     `
     document.head.appendChild(style)
   }

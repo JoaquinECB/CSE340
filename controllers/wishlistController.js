@@ -19,6 +19,8 @@ wishlistCont.addToWishlist = async function (req, res, next) {
     const result = await wishlistModel.addToWishlist(account_id, inv_id)
     if (result.rowCount > 0) {
       return res.json({ success: true, message: "Added to wishlist" })
+    } else {
+      return res.status(400).json({ success: false, message: "Could not add to wishlist" })
     }
   } catch (error) {
     console.error("addToWishlist error: " + error)
