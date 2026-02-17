@@ -9,10 +9,15 @@ const wishlistCont = {}
  * ************************** */
 wishlistCont.addToWishlist = async function (req, res, next) {
   const { inv_id } = req.body
+  
+  if (!res.locals.accountData?.account_id) {
+    return res.status(401).json({ success: false, message: "User not logged in" })
+  }
+  
   const account_id = res.locals.accountData.account_id
 
-  if (!inv_id) {
-    return res.status(400).json({ success: false, message: "Vehicle ID is required" })
+  if (!inv_id || !Number.isInteger(Number(inv_id)) || Number(inv_id) <= 0) {
+    return res.status(400).json({ success: false, message: "Valid Vehicle ID is required" })
   }
 
   try {
@@ -23,8 +28,11 @@ wishlistCont.addToWishlist = async function (req, res, next) {
       return res.status(400).json({ success: false, message: "Could not add to wishlist" })
     }
   } catch (error) {
-    console.error("addToWishlist error: " + error)
-    return res.status(400).json({ success: false, message: "Vehicle already in wishlist" })
+    console.error("addToWishlist error: " + error.message)
+    if (error.constraint === "unique_account_inventory") {
+      return res.status(400).json({ success: false, message: "Vehicle already in wishlist" })
+    }
+    return res.status(500).json({ success: false, message: "Error adding to wishlist" })
   }
 }
 
@@ -33,10 +41,15 @@ wishlistCont.addToWishlist = async function (req, res, next) {
  * ************************** */
 wishlistCont.removeFromWishlist = async function (req, res, next) {
   const { inv_id } = req.body
+  
+  if (!res.locals.accountData?.account_id) {
+    return res.status(401).json({ success: false, message: "User not logged in" })
+  }
+  
   const account_id = res.locals.accountData.account_id
 
-  if (!inv_id) {
-    return res.status(400).json({ success: false, message: "Vehicle ID is required" })
+  if (!inv_id || !Number.isInteger(Number(inv_id)) || Number(inv_id) <= 0) {
+    return res.status(400).json({ success: false, message: "Valid Vehicle ID is required" })
   }
 
   try {
@@ -46,7 +59,7 @@ wishlistCont.removeFromWishlist = async function (req, res, next) {
     }
     return res.status(404).json({ success: false, message: "Item not found in wishlist" })
   } catch (error) {
-    console.error("removeFromWishlist error: " + error)
+    console.error("removeFromWishlist error: " + error.message)
     return res.status(500).json({ success: false, message: "Error removing from wishlist" })
   }
 }
@@ -79,9 +92,14 @@ wishlistCont.buildWishlist = async function (req, res, next) {
  * ************************** */
 wishlistCont.checkWishlist = async function (req, res, next) {
   const { inv_id } = req.query
+  
+  if (!res.locals.accountData?.account_id) {
+    return res.status(401).json({ inWishlist: false })
+  }
+  
   const account_id = res.locals.accountData.account_id
 
-  if (!inv_id) {
+  if (!inv_id || !Number.isInteger(Number(inv_id)) || Number(inv_id) <= 0) {
     return res.status(400).json({ inWishlist: false })
   }
 
@@ -89,7 +107,7 @@ wishlistCont.checkWishlist = async function (req, res, next) {
     const inWishlist = await wishlistModel.isInWishlist(account_id, inv_id)
     return res.json({ inWishlist })
   } catch (error) {
-    console.error("checkWishlist error: " + error)
+    console.error("checkWishlist error: " + error.message)
     return res.status(500).json({ inWishlist: false })
   }
 }

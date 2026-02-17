@@ -8,8 +8,8 @@ async function addToWishlist(account_id, inv_id) {
     const sql = "INSERT INTO user_wishlist (account_id, inv_id) VALUES ($1, $2) RETURNING *"
     return await pool.query(sql, [account_id, inv_id])
   } catch (error) {
-    console.error("addToWishlist error " + error)
-    return error.message
+    console.error("addToWishlist error: " + error.message)
+    throw error
   }
 }
 
@@ -21,8 +21,8 @@ async function removeFromWishlist(account_id, inv_id) {
     const sql = "DELETE FROM user_wishlist WHERE account_id = $1 AND inv_id = $2"
     return await pool.query(sql, [account_id, inv_id])
   } catch (error) {
-    console.error("removeFromWishlist error " + error)
-    return error.message
+    console.error("removeFromWishlist error: " + error.message)
+    throw error
   }
 }
 
@@ -58,8 +58,8 @@ async function isInWishlist(account_id, inv_id) {
     )
     return data.rowCount > 0
   } catch (error) {
-    console.error("isInWishlist error " + error)
-    return false
+    console.error("isInWishlist error: " + error.message)
+    throw error
   }
 }
 

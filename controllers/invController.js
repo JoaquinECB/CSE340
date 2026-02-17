@@ -42,7 +42,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
   
   // Check if user is logged in and if vehicle is in their wishlist
   let inWishlist = false
-  if (res.locals.loggedin) {
+  if (res.locals.loggedin && res.locals.accountData?.account_id) {
     inWishlist = await wishlistModel.isInWishlist(res.locals.accountData.account_id, inv_id)
   }
   
