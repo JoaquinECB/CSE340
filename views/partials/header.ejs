@@ -6,7 +6,6 @@
     <% if (loggedin) { %>
       <span>Welcome <%= accountData.account_firstname %></span>
       <a href="/wishlist" title="View your wishlist">My Wishlist</a>
-      <a href="/account/" title="Go to account management">My Account</a>
       <a href="/account/logout" title="Logout of the system">Logout</a>
     <% } else { %>
       <a title="Click to log in" href="/account/login">My Account</a>
