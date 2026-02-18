@@ -177,20 +177,22 @@ async function updateAccount(req, res, next) {
     return res.redirect("/account/")
   }
 
-  // Check if the new email is already used by another account
-  const existingAccount = await accountModel.getAccountByEmail(account_email)
-  console.log("existingAccount:", existingAccount, "account_id from form:", account_id);
-  if (existingAccount && Number(existingAccount.account_id) !== Number(account_id)) {
-    req.flash("notice", "Email exists. Please use a different email")
-    return res.status(400).render("account/update", {
-      title: "Update Account",
-      nav,
-      errors: null,
-      account_id,
-      account_firstname,
-      account_lastname,
-      account_email,
-    })
+  // Only check for duplicate email if the new email is different from the current email
+  const currentAccount = await accountModel.getAccountById(account_id);
+  if (currentAccount && currentAccount.account_email !== account_email) {
+    const existingAccount = await accountModel.getAccountByEmail(account_email);
+    if (existingAccount && Number(existingAccount.account_id) !== Number(account_id)) {
+      req.flash("notice", "Email exists. Please use a different email");
+      return res.status(400).render("account/update", {
+        title: "Update Account",
+        nav,
+        errors: null,
+        account_id,
+        account_firstname,
+        account_lastname,
+        account_email,
+      });
+    }
   }
 
   const updateResult = await accountModel.updateAccountInfo(account_id, account_firstname, account_lastname, account_email)
