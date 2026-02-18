@@ -168,7 +168,8 @@ async function buildUpdateAccountView(req, res, next) {
  * ************************************ */
 async function updateAccount(req, res, next) {
   let nav = await utilities.getNav()
-  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  let { account_firstname, account_lastname, account_email, account_id } = req.body
+  account_email = account_email.trim().toLowerCase();
   const loggedInAccount = res.locals.accountData;
   // Only allow if the user is updating their own account or is an Admin
   if (!loggedInAccount || (loggedInAccount.account_id != account_id && loggedInAccount.account_type !== "Admin")) {
