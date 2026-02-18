@@ -129,10 +129,13 @@ async function accountLogin(req, res) {
  * ************************************ */
 async function displayAccountManagement(req, res, next) {
   let nav = await utilities.getNav()
+  // Pass accountData from JWT to view for role-based rendering
+  const accountData = res.locals.accountData;
   res.render("account/index", {
     title: "Account Management",
     nav,
     errors: null,
+    accountData,
   })
 }
 
@@ -142,6 +145,12 @@ async function displayAccountManagement(req, res, next) {
 async function buildUpdateAccountView(req, res, next) {
   const account_id = parseInt(req.params.account_id)
   let nav = await utilities.getNav()
+  const loggedInAccount = res.locals.accountData;
+  // Only allow if the user is updating their own account or is an Admin
+  if (!loggedInAccount || (loggedInAccount.account_id != account_id && loggedInAccount.account_type !== "Admin")) {
+    req.flash("notice", "You do not have permission to update this account.")
+    return res.redirect("/account/")
+  }
   const accountData = await accountModel.getAccountById(account_id)
   res.render("account/update", {
     title: "Update Account",
@@ -160,11 +169,31 @@ async function buildUpdateAccountView(req, res, next) {
 async function updateAccount(req, res, next) {
   let nav = await utilities.getNav()
   const { account_firstname, account_lastname, account_email, account_id } = req.body
-  
+  const loggedInAccount = res.locals.accountData;
+  // Only allow if the user is updating their own account or is an Admin
+  if (!loggedInAccount || (loggedInAccount.account_id != account_id && loggedInAccount.account_type !== "Admin")) {
+    req.flash("notice", "You do not have permission to update this account.")
+    return res.redirect("/account/")
+  }
+
+  // Check if the new email is already used by another account
+  const existingAccount = await accountModel.getAccountByEmail(account_email)
+  if (existingAccount && existingAccount.account_id != account_id) {
+    req.flash("notice", "Email exists. Please use a different email")
+    return res.status(400).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+  }
+
   const updateResult = await accountModel.updateAccountInfo(account_id, account_firstname, account_lastname, account_email)
-  
+
   if (updateResult) {
-    const accountData = await accountModel.getAccountById(parseInt(account_id))
     req.flash("notice", "Account information updated successfully.")
     res.redirect("/account/")
   } else {
