@@ -209,30 +209,41 @@ async function updateAccount(req, res, next) {
 
   // Only check for duplicate email if the new email is different from the current email
   const currentAccount = await accountModel.getAccountById(account_id);
+  console.log('=== DEBUG EMAIL VALIDATION ===');
   console.log('Current account:', currentAccount);
   console.log('New email:', account_email);
   console.log('Current email:', currentAccount?.account_email);
+  console.log('Emails are different:', currentAccount?.account_email !== account_email);
   
   if (currentAccount && currentAccount.account_email !== account_email) {
     console.log('Email changed, checking for duplicates...');
     const existingAccount = await accountModel.getAccountByEmail(account_email);
-    console.log('Existing account:', existingAccount);
-    console.log('Account ID comparison - existing:', existingAccount?.account_id, 'current:', account_id, 'types:', typeof existingAccount?.account_id, typeof account_id);
+    console.log('Existing account found:', !!existingAccount);
+    console.log('Existing account data:', existingAccount);
     
-    if (existingAccount && existingAccount.account_id != account_id) {
-      console.log('Duplicate email found!');
-      req.flash("notice", "Email exists. Please use a different email");
-      return res.status(400).render("account/update", {
-        title: "Update Account",
-        nav,
-        errors: null,
-        account_id,
-        account_firstname,
-        account_lastname,
-        account_email,
-      });
+    if (existingAccount) {
+      console.log('Account ID comparison:');
+      console.log('- existingAccount.account_id:', existingAccount.account_id, 'type:', typeof existingAccount.account_id);
+      console.log('- account_id:', account_id, 'type:', typeof account_id);
+      console.log('- Are they equal?', existingAccount.account_id == account_id);
+      console.log('- Are they strictly equal?', existingAccount.account_id === account_id);
+      
+      if (existingAccount.account_id != account_id) {
+        console.log('DUPLICATE EMAIL CONFIRMED!');
+        req.flash("notice", "Email exists. Please use a different email");
+        return res.status(400).render("account/update", {
+          title: "Update Account",
+          nav,
+          errors: null,
+          account_id,
+          account_firstname,
+          account_lastname,
+          account_email,
+        });
+      }
     }
   }
+  console.log('=== END DEBUG ===');
 
   const updateResult = await accountModel.updateAccountInfo(
     account_id,
