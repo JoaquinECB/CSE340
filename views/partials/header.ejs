@@ -4,7 +4,7 @@
   </div>
   <div id="tools">
     <% if (loggedin) { %>
-      <span>Welcome <%= accountData.account_firstname %></span>
+      <span><a href="/account/" title="Go to Account Management">Welcome <%= accountData.account_firstname %></a></span>
       <a href="/wishlist" title="View your wishlist">My Wishlist</a>
       <a href="/account/logout" title="Logout of the system">Logout</a>
     <% } else { %>

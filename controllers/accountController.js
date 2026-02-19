@@ -237,6 +237,16 @@ async function updateAccount(req, res, next) {
   );
 
   if (updateResult) {
+    // Update the JWT with new account information
+    const updatedAccount = await accountModel.getAccountById(account_id);
+    const accessToken = jwt.sign(updatedAccount, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
+    
+    if(process.env.NODE_ENV === 'development') {
+      res.cookie("jwt", accessToken, { httpOnly: false, maxAge: 3600 * 1000 });
+    } else {
+      res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 });
+    }
+    
     req.flash("notice", "Account information updated successfully.");
     res.redirect("/account/");
   } else {
